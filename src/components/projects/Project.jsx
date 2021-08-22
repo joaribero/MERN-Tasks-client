@@ -2,7 +2,7 @@ import React from 'react';
 
 const Project = ({project}) => {
     
-    //console.log(project);
+    console.log(project);
 
     return (  
         <li>

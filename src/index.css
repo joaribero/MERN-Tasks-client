@@ -326,3 +326,11 @@ aside  {
   display: block;
   opacity: .7;
 }
+
+.btn-eliminar {
+  background-color: var(--blanco);
+}
+
+.btn-eliminar:hover {
+  background-color: var(--gris2);
+}
