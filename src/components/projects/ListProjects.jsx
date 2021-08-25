@@ -1,18 +1,27 @@
-import React from 'react';
-import Project from './Project.jsx';
+import React,{useContext, useEffect} from 'react';
+import ProjectM from './Project.jsx';
+import ProjectContext from '../../context/projects/projectContext';
 
 const ListProjects = () => {
     
-    const projectsList = [
-        {name: 'Tienda virtual'},
-        {name: 'Intranet'},
-        {name: 'Diseño de sitio web'}
-    ]
+    //obtain form state
+    const ProjectsContext = useContext(ProjectContext);
+    const { projectsList, getProjects } = ProjectsContext;
+
+    //Get projects when loads the component
+    useEffect(() => {
+        getProjects();
+    },[]);
+
+    //check if there is any project
+    if (projectsList.length === 0) return null;
+
+    console.log(projectsList);
     
     return (  
         <ul className="listado-proyectos">
-            {projectsList.forEach(project => {
-                <Project project={project}/>
+            {projectsList.map(project => {
+                return <ProjectM key={project.id} project={project}/>
             })}
         </ul>
     );

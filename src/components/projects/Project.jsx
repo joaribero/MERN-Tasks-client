@@ -1,9 +1,7 @@
 import React from 'react';
 
-const Project = ({project}) => {
+const ProjectM = ({project}) => {
     
-    console.log(project);
-
     return (  
         <li>
             <button
@@ -15,4 +13,4 @@ const Project = ({project}) => {
     );
 }
  
-export default Project;
+export default ProjectM;

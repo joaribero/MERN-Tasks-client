@@ -5,9 +5,7 @@ const NewProject = () => {
     
     //obtain form state
     const ProjectsContext = useContext(ProjectContext);
-    const { form,showForm } = ProjectsContext;
-
-    console.log('El valor de form es: ' + form);
+    const { form,showForm,addProject } = ProjectsContext;
 
     //state for project
     const [project, setProject] = useState({
@@ -29,10 +27,17 @@ const NewProject = () => {
         e.preventDefault();
 
         //Validations
+        if (name === '') {
+            return;
+        }
 
         //Add to the state
+        addProject(project)
 
         //Reset form
+        setProject({
+            name: ''
+        })
     };
 
     //show form
