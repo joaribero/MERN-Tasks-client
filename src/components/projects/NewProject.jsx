@@ -5,7 +5,7 @@ const NewProject = () => {
     
     //obtain form state
     const ProjectsContext = useContext(ProjectContext);
-    const { form,showForm,addProject } = ProjectsContext;
+    const { form,errorform,showForm,addProject, showError } = ProjectsContext;
 
     //state for project
     const [project, setProject] = useState({
@@ -28,6 +28,7 @@ const NewProject = () => {
 
         //Validations
         if (name === '') {
+            showError();
             return;
         }
 
@@ -71,6 +72,7 @@ const NewProject = () => {
                     </form>)
                 : null
             }
+            {errorform? <p className="mensaje error">The project name is required.</p> : null}
         </Fragment>
         
     );

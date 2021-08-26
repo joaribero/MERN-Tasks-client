@@ -14,7 +14,7 @@ const ListProjects = () => {
     },[]);
 
     //check if there is any project
-    if (projectsList.length === 0) return null;
+    if (projectsList.length === 0) return <p>No projects, start creating one!</p>;
 
     console.log(projectsList);
     
