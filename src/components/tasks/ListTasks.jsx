@@ -1,19 +1,19 @@
 import React,{Fragment,useContext} from 'react';
 import Task from './Task.jsx'
 import ProjectContext from '../../context/projects/projectContext';
+import TaskContext from '../../context/tasks/taskContext';
 
 const ListTasks = () => {
     
-    const tareasProyecto = [
-        {name: 'Elegir Plataforma', state: true},
-        {name: 'Elegir Colores', state: false},
-        {name: 'Elegir plataformas de pago', state: false},
-        {name: 'Elegir Hosting', state: true},
-    ]
 
-    //obtain from state
+    //obtain from project state
     const ProjectsContext = useContext(ProjectContext);
     const {project,deleteProject} = ProjectsContext;
+
+    //obtain from tasks state
+    const TasksContext = useContext(TaskContext);
+    const {tasksproject} = TasksContext;
+
     
     //If there is no project selected
     if(!project) return <h2>Select a project</h2>
@@ -30,9 +30,9 @@ const ListTasks = () => {
 
             <ul className="listado-tareas">
                 {
-                    tareasProyecto.length === 0
+                    tasksproject.length === 0
                         ?(<li className="tarea">No tasks</li>)
-                        : tareasProyecto.map(tarea => (
+                        : tasksproject.map(tarea => (
                         <Task
                          task={tarea}/> 
                     ))
