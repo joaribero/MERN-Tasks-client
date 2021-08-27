@@ -10,12 +10,22 @@ const Task = ({task}) => {
     
     //obtain from tasks state
     const TasksContext = useContext(TaskContext);
-    const {deleteTask, getTasks} = TasksContext;
+    const {deleteTask, getTasks, changeTaskState} = TasksContext;
     
     //function when user clicks delete button
     const taskDelete = id => {
         deleteTask(id);
         getTasks(project.id);
+    }
+
+    //function that modifies tasks state
+    const changeState = task => {
+        if(task.state) {
+            task.state = false;
+        } else {
+            task.state = true;
+        }
+        changeTaskState(task);
     }
 
     return (  
@@ -24,10 +34,10 @@ const Task = ({task}) => {
             <div className="estado">
                 {task.state 
                     ? (
-                        <button type="button" className="completo"> Done</button>
+                        <button type="button" className="completo" onClick={() => changeState(task)}> Done</button>
                     )
                     : (
-                        <button type="button" className="incompleto"> Undone</button>
+                        <button type="button" className="incompleto" onClick={() => changeState(task)}> Undone</button>
                     )
                 }
             </div>
