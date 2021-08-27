@@ -32,9 +32,10 @@ const ListTasks = () => {
                 {
                     tasksproject.length === 0
                         ?(<li className="tarea">No tasks</li>)
-                        : tasksproject.map(tarea => (
+                        : tasksproject.map(task => (
                         <Task
-                         task={tarea}/> 
+                            key={task.id}
+                            task={task}/> 
                     ))
                 }
             </ul>
