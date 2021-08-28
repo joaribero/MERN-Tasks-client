@@ -1,7 +1,7 @@
 import { ADD_PROJECT, CURR_PROJECT, DELETE_PROJECT, FORM_PROJECT, GET_PROJECTS, VALIDATE_FORM } from "../../types";
 
 
-
+// eslint-disable-next-line
 export default (state, action) => {
     switch (action.type) {
         

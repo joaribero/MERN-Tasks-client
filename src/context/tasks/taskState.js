@@ -1,9 +1,13 @@
 import React,{useReducer} from 'react';
+import {v4 as uuidv4} from 'uuid'
 import TaskContext from './taskContext';
 import TaskReducer from './taskReducer';
 import { 
     ADD_TASK,
+    CLEAN_TASK,
+    CURR_TASK,
     DELETE_TASK,
+    EDIT_TASK,
     STATE_TASK,
     TASKS_PROJECT, 
     VALIDATE_TASK
@@ -22,7 +26,8 @@ const TaskState = props => {
             {id: 8, name: 'Elegir Hostingasfsaf', state: true, projectId: 4}
         ],
         tasksproject: [],
-        taskerror: false
+        taskerror: false,
+        selectedtask: null
 
     }
 
@@ -40,6 +45,7 @@ const TaskState = props => {
 
     //create a new task
     const addTask = task => {
+        task.id = uuidv4();
         dispatch({
             type: ADD_TASK,
             payload: task
@@ -69,17 +75,44 @@ const TaskState = props => {
         })
     }
 
+    //Extract the current task
+    const setCurrentTask = task => {
+        dispatch({
+            type: CURR_TASK,
+            payload: task
+        })
+    }
+
+    //edit task
+    const editTask = task => {
+        dispatch({
+            type: EDIT_TASK,
+            payload: task
+        })
+    }
+
+    //clean selected task
+    const cleanTask = () => {
+        dispatch({
+            type: CLEAN_TASK
+        })
+    }
+
     return (
         <TaskContext.Provider
             value={{
                 tasks: state.tasks,
                 tasksproject: state.tasksproject,
-                taskerror: state.taskerror, 
+                taskerror: state.taskerror,
+                selectedtask: state.selectedtask, 
                 getTasks,
                 addTask,
                 validateTask,
                 deleteTask,
-                changeTaskState
+                changeTaskState,
+                setCurrentTask,
+                editTask,
+                cleanTask
             }}
         >
             {props.children}

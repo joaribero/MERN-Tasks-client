@@ -1,4 +1,4 @@
-import React,{useContext, useState} from 'react';
+import React,{useContext, useState, useEffect} from 'react';
 import ProjectContext from '../../context/projects/projectContext';
 import TaskContext from '../../context/tasks/taskContext';
 
@@ -10,7 +10,18 @@ const FormTask = () => {
 
     //obtain from tasks state
     const TasksContext = useContext(TaskContext);
-    const {taskerror, addTask, validateTask, getTasks} = TasksContext;
+    const {taskerror, selectedtask, addTask, validateTask, getTasks, editTask, cleanTask} = TasksContext;
+
+    //Effect detect when a task is selected
+    useEffect(() => {
+        if(selectedtask !== null) {
+            setTask(selectedtask);
+        } else {
+            setTask({
+                name: ''
+            })
+        }
+    }, [selectedtask]);
 
     //form state
     const [task,setTask] = useState({
@@ -31,6 +42,8 @@ const FormTask = () => {
         })
     }
 
+
+    // ON SUBMIT FORM
     const onSubmit = e => {
         e.preventDefault();
 
@@ -40,12 +53,21 @@ const FormTask = () => {
             return
         }
 
-        //pass validations
+        //checks if it a new task or edit
+        if(selectedtask === null) {
+            
+            //add the new task to the state
+            task.projectId = project.id;
+            task.state = false;
+            addTask(task);
+        } else {
+            
+            //edit current task
+            editTask(task);
+            //Clean current task from state
+            cleanTask();
 
-        //add the new task to the state
-        task.projectId = project.id;
-        task.state = false;
-        addTask(task);
+        }        
 
         //obtain and filter project's tasks
         getTasks(project.id);
@@ -71,7 +93,7 @@ const FormTask = () => {
                 <div className="contenedor-input">
                     <input type="submit"  
                         className="btn btn-primario btn-submit btn-block" 
-                        value="Add task"
+                        value={selectedtask ? 'Edit task' : 'Add task'}
                     />
                 </div>
             </form>

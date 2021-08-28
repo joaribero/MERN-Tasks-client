@@ -10,7 +10,7 @@ const Task = ({task}) => {
     
     //obtain from tasks state
     const TasksContext = useContext(TaskContext);
-    const {deleteTask, getTasks, changeTaskState} = TasksContext;
+    const {deleteTask, getTasks, changeTaskState, setCurrentTask} = TasksContext;
     
     //function when user clicks delete button
     const taskDelete = id => {
@@ -28,6 +28,11 @@ const Task = ({task}) => {
         changeTaskState(task);
     }
 
+    //Add current task when user wants to edit
+    const selectTask = task => {
+        setCurrentTask(task);
+    }
+
     return (  
         <li className="tarea sombra">
             <p>{task.name}</p>
@@ -43,7 +48,10 @@ const Task = ({task}) => {
             </div>
 
             <div className="acciones">
-                <button type="button" className="btn btn-primario">Edit</button>
+                <button type="button" 
+                    className="btn btn-primario"
+                    onClick={() => selectTask(task)}
+                    >Edit</button>
                 <button type="button" 
                     className="btn btn-secundario" 
                     onClick={() => taskDelete(task.id)}
