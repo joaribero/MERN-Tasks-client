@@ -49,9 +49,10 @@ const NewAccount = () => {
             showAlert('The password does not match', 'alerta-error');
             return;
         }
+        const name = uname;
 
         //Send credentials to action
-        registerUser({uname, email, password});
+        registerUser({name, email, password});
     }
 
     return (  
