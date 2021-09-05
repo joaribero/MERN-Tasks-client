@@ -1,11 +1,15 @@
 import React, {useState, useContext} from 'react';
 import {Link} from 'react-router-dom';
 import AlertContext from '../../context/alerts/alertContext';
+import AuthContext from '../../context/auth/authContext';
 
 const NewAccount = () => {
 
     const alertContext = useContext(AlertContext);
     const {alert, showAlert} = alertContext;
+
+    const authContext = useContext(AuthContext);
+    const {registerUser} = authContext;
 
     const [user, setUser] = useState({
         uname: '',
@@ -47,6 +51,7 @@ const NewAccount = () => {
         }
 
         //Send credentials to action
+        registerUser({uname, email, password});
     }
 
     return (  
@@ -60,7 +65,7 @@ const NewAccount = () => {
                     <div className="campo-form">
                         <label htmlFor="text">Name</label>
                         <input type="text" 
-                            name="text" 
+                            name="uname" 
                             id="text"
                             placeholder="Your name"
                             value={uname}
@@ -93,7 +98,7 @@ const NewAccount = () => {
                     <div className="campo-form">
                         <label htmlFor="confirm">Confirm password</label>
                         <input type="password" 
-                            name="password" 
+                            name="confirmP" 
                             id="password"
                             placeholder="Repeat password"
                             value={confirmP}
