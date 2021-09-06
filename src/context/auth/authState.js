@@ -1,5 +1,5 @@
 import React,{useReducer} from 'react';
-import { ERR_LOGIN, ERR_REGISTER, GET_USER, SUCC_LOGIN, SUCC_REGISTER } from '../../types';
+import { ERR_LOGIN, ERR_REGISTER, GET_USER, LOG_OUT, SUCC_LOGIN, SUCC_REGISTER } from '../../types';
 import AuthContext from './authContext';
 import AuthReducer from './authReducer';
 import clientAxios from '../../config/axios';
@@ -93,6 +93,15 @@ const AuthState = props => {
             })
         }
     }
+
+    //log out
+    const logOut = () => {
+        dispatch({
+            type: LOG_OUT
+        })
+    }
+
+
     
     return (
         <AuthContext.Provider
@@ -103,7 +112,8 @@ const AuthState = props => {
                 message: state.message,
                 registerUser,
                 logIn,
-                userAuthenticated
+                userAuthenticated,
+                logOut
             }}
         >
             {props.children}
