@@ -7,10 +7,14 @@ const PrivateRoute = ({component: Component, ...props}) => {
     //we use this component to route the components who need previous authentication.
     //works like a "middlware component" between the ones who doesnt need auth and the ones who does.
     const authContext = useContext(AuthContext);
-    const {authenticated} = authContext;
+    const {authenticated, loading, userAuthenticated} = authContext;
+
+    useEffect(() => {
+        userAuthenticated();
+    }, [])
   
     return (  
-        <Route {...props} render={props => !authenticated ? (
+        <Route {...props} render={props => !authenticated && !loading ? (
             //if it's not auth then redirect to home
             <Redirect to="/"/>
         ) : (
