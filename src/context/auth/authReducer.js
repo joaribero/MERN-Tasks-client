@@ -1,4 +1,4 @@
-import { ERR_REGISTER, SUCC_REGISTER } from "../../types";
+import { ERR_LOGIN, ERR_REGISTER, GET_USER, SUCC_REGISTER } from "../../types";
 
 
 // eslint-disable-next-line
@@ -12,14 +12,22 @@ export default (state, action) => {
                 authenticated: true,
                 message: null
             }
-        
+
+        case ERR_LOGIN: 
         case ERR_REGISTER:
+            localStorage.removeItem('token');
             return {
                 ...state,
                 token: null,
                 message: action.payload
             }
         
+        case GET_USER:
+            return {
+                ...state,
+                user: action.payload
+            }    
+
         default:
             return state;
     }
