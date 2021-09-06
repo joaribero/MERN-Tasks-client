@@ -1,5 +1,5 @@
 import React,{useReducer} from 'react';
-import { ERR_LOGIN, ERR_REGISTER, GET_USER, SUCC_REGISTER } from '../../types';
+import { ERR_LOGIN, ERR_REGISTER, GET_USER, SUCC_LOGIN, SUCC_REGISTER } from '../../types';
 import AuthContext from './authContext';
 import AuthReducer from './authReducer';
 import clientAxios from '../../config/axios';
@@ -67,6 +67,32 @@ const AuthState = props => {
             })
         }
     }
+
+    //when user logs in
+    const logIn =  async data => {
+
+        try {
+
+            const response = await clientAxios.post('/api/auth', data);
+            dispatch({
+                type: SUCC_LOGIN,
+                payload: response.data
+            })
+
+            userAuthenticated();
+            
+        } catch (error) {
+            const alert = {
+                msg: error.response.data.msg,
+                category: 'alerta-error'
+            }
+
+            dispatch({
+                type: ERR_LOGIN,
+                payload: alert
+            })
+        }
+    }
     
     return (
         <AuthContext.Provider
@@ -75,7 +101,8 @@ const AuthState = props => {
                 authenticated: state.authenticated,
                 user: state.user,
                 message: state.message,
-                registerUser
+                registerUser,
+                logIn
             }}
         >
             {props.children}

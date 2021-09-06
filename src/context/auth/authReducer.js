@@ -1,10 +1,11 @@
-import { ERR_LOGIN, ERR_REGISTER, GET_USER, SUCC_REGISTER } from "../../types";
+import { ERR_LOGIN, ERR_REGISTER, GET_USER, SUCC_LOGIN, SUCC_REGISTER } from "../../types";
 
 
 // eslint-disable-next-line
 export default (state, action) => {
     switch(action.type) {
         
+        case SUCC_LOGIN:
         case SUCC_REGISTER:
             localStorage.setItem('token', action.payload.token);
             return {
