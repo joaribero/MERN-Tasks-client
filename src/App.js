@@ -7,6 +7,15 @@ import ProjectState from './context/projects/projectState';
 import TaskState from './context/tasks/taskState.js';
 import AlertState from './context/alerts/alertState.js';
 import AuthState from './context/auth/authState.js';
+import tokenAuth from './config/tokenAuth.js';
+
+//checks for a token
+const token = localStorage.getItem('token');
+if (token) {
+
+  tokenAuth(token);
+
+}
 
 function App() {
   return (
