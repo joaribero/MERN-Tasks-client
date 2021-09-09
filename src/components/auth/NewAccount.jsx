@@ -12,6 +12,7 @@ const NewAccount = (props) => {
     const {message, authenticated, registerUser} = authContext;
 
     //when user authenticate or register
+    //eslint-disable-next-line
     useEffect(() => {
 
         if(authenticated) {

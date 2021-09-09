@@ -1,4 +1,4 @@
-import { ADD_PROJECT, CURR_PROJECT, DELETE_PROJECT, FORM_PROJECT, GET_PROJECTS, VALIDATE_FORM } from "../../types";
+import { ADD_PROJECT, CURR_PROJECT, DELETE_PROJECT, ERR_PROJECT, FORM_PROJECT, GET_PROJECTS, VALIDATE_FORM } from "../../types";
 
 
 // eslint-disable-next-line
@@ -40,8 +40,14 @@ export default (state, action) => {
         case DELETE_PROJECT:
             return{
                 ...state,
-                projectsList: state.projectsList.filter(project => project.id !== action.payload),
+                projectsList: state.projectsList.filter(project => project._id !== action.payload),
                 project: null
+            }
+
+        case ERR_PROJECT:
+            return{
+                ...state,
+                message: action.payload
             }
         default:
             return state;

@@ -9,6 +9,7 @@ const PrivateRoute = ({component: Component, ...props}) => {
     const authContext = useContext(AuthContext);
     const {authenticated, loading, userAuthenticated} = authContext;
 
+    // eslint-disable-next-line
     useEffect(() => {
         userAuthenticated();
     }, [])
