@@ -15,7 +15,7 @@ const Task = ({task}) => {
     //function when user clicks delete button
     const taskDelete = id => {
         deleteTask(id);
-        getTasks(project.id);
+        getTasks(project);
     }
 
     //function that modifies tasks state

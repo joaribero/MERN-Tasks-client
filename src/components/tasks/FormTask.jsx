@@ -57,8 +57,10 @@ const FormTask = () => {
         if(selectedtask === null) {
             
             //add the new task to the state
-            task.projectId = project.id;
+            task.project = project._id;
             task.state = false;
+
+            console.log(task);
             addTask(task);
         } else {
             

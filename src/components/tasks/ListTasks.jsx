@@ -5,7 +5,8 @@ import TaskContext from '../../context/tasks/taskContext';
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
 const ListTasks = () => {
-    
+    // eslint-disable-next-line
+    const nodeRef = React.useRef(null);
 
     //obtain from project state
     const ProjectsContext = useContext(ProjectContext);
@@ -37,7 +38,7 @@ const ListTasks = () => {
                         <TransitionGroup>
                             {tasksproject.map(task => (
                                 <CSSTransition 
-                                    key={task.id}
+                                    key={task._id}
                                     timeout={200}
                                     classNames="tarea">
                                     <Task

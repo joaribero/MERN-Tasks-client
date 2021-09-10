@@ -1,7 +1,7 @@
 import React,{useReducer} from 'react';
-import {v4 as uuidv4} from 'uuid'
 import TaskContext from './taskContext';
 import TaskReducer from './taskReducer';
+import clientAxios from '../../config/axios';
 import { 
     ADD_TASK,
     CLEAN_TASK,
@@ -15,16 +15,6 @@ import {
 
 const TaskState = props => {
     const initialState = {
-        tasks: [
-            {id: 1, name: 'Elegir Plataforma', state: true, projectId: 1},
-            {id: 2, name: 'Elegir Colores', state: false, projectId: 2},
-            {id: 3, name: 'Elegir plataformas de pago', state: false, projectId: 3},
-            {id: 4, name: 'Elegir Hosting', state: true, projectId: 4},
-            {id: 5, name: 'Elegir Plataformaasf', state: true, projectId: 1},
-            {id: 6, name: 'Elegir Coloresasfsaf', state: false, projectId: 2},
-            {id: 7, name: 'Elegir plataformas de pagoasfasf', state: false, projectId: 3},
-            {id: 8, name: 'Elegir Hostingasfsaf', state: true, projectId: 4}
-        ],
         tasksproject: [],
         taskerror: false,
         selectedtask: null
@@ -36,20 +26,38 @@ const TaskState = props => {
     //functions
 
     //obtain tasks of the project
-    const getTasks = projectId => {
-        dispatch({
-            type: TASKS_PROJECT,
-            payload: projectId
-        })
+    const getTasks = async project => {
+        
+        try {
+
+            const response = await clientAxios.get('/api/tasks',{params: {project}});
+            console.log(response);
+
+            dispatch({
+                type: TASKS_PROJECT,
+                payload: response.data
+            })
+
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     //create a new task
-    const addTask = task => {
-        task.id = uuidv4();
-        dispatch({
-            type: ADD_TASK,
-            payload: task
-        })
+    const addTask = async task => {
+        
+        try {
+            const response = await clientAxios.post('/api/tasks',task);
+
+            dispatch({
+                type: ADD_TASK,
+                payload: task
+            })
+
+        } catch (error) {
+            console.log(error);
+        }
+
     }
 
     //validate and show error message
@@ -101,7 +109,6 @@ const TaskState = props => {
     return (
         <TaskContext.Provider
             value={{
-                tasks: state.tasks,
                 tasksproject: state.tasksproject,
                 taskerror: state.taskerror,
                 selectedtask: state.selectedtask, 

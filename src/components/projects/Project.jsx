@@ -15,7 +15,7 @@ const ProjectM = ({project}) => {
     // Function to add current project
     const selectProject = project => {
         currentProject(project);
-        getTasks(project.id);
+        getTasks(project._id);
     }
 
     return (  
