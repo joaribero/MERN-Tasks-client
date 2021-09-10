@@ -8,7 +8,6 @@ import {
     CURR_TASK,
     DELETE_TASK,
     EDIT_TASK,
-    STATE_TASK,
     TASKS_PROJECT, 
     VALIDATE_TASK
 } from '../../types';
@@ -31,7 +30,6 @@ const TaskState = props => {
         try {
 
             const response = await clientAxios.get('/api/tasks',{params: {project}});
-            console.log(response);
 
             dispatch({
                 type: TASKS_PROJECT,
@@ -47,7 +45,7 @@ const TaskState = props => {
     const addTask = async task => {
         
         try {
-            const response = await clientAxios.post('/api/tasks',task);
+            await clientAxios.post('/api/tasks',task);
 
             dispatch({
                 type: ADD_TASK,
@@ -68,19 +66,19 @@ const TaskState = props => {
     }
 
     //delete task by id
-    const deleteTask = taskId => {
-        dispatch({
-            type: DELETE_TASK,
-            payload: taskId
-        })
-    }
+    const deleteTask = async (id, project) => {
+        
+        try {
+            
+            await clientAxios.delete(`/api/tasks/${id}`,{params: {project}});
+            dispatch({
+                type: DELETE_TASK,
+                payload: id
+            })
 
-    //change state of the task
-    const changeTaskState = task => {
-        dispatch({
-            type: STATE_TASK,
-            payload: task
-        })
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     //Extract the current task
@@ -92,11 +90,18 @@ const TaskState = props => {
     }
 
     //edit task
-    const editTask = task => {
-        dispatch({
-            type: EDIT_TASK,
-            payload: task
-        })
+    const editTask = async task => {
+        try {
+            
+            const response = await clientAxios.put(`/api/tasks/${task._id}`, task);
+            dispatch({
+                type: EDIT_TASK,
+                payload: response.data.task
+            })
+
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     //clean selected task
@@ -116,7 +121,6 @@ const TaskState = props => {
                 addTask,
                 validateTask,
                 deleteTask,
-                changeTaskState,
                 setCurrentTask,
                 editTask,
                 cleanTask
